@@ -41,8 +41,19 @@ class Product(BaseModel):
 # Add your own schemas here:
 # --------------------------------------------------
 
-# Note: The Flames database viewer will automatically:
-# 1. Read these schemas from GET /schema endpoint
-# 2. Use them for document validation when creating/editing
-# 3. Handle all database operations (CRUD) directly
-# 4. You don't need to create any database endpoints!
+class Conversation(BaseModel):
+    """
+    Conversations collection schema
+    Collection name: "conversation"
+    """
+    title: str = Field(..., description="Conversation title")
+    created_by: Optional[str] = Field(None, description="User identifier if available")
+
+class Message(BaseModel):
+    """
+    Messages collection schema
+    Collection name: "message"
+    """
+    conversation_id: str = Field(..., description="ID of the conversation this message belongs to")
+    role: str = Field(..., description="Role of the message sender: 'user' or 'assistant'")
+    content: str = Field(..., description="Message content")
